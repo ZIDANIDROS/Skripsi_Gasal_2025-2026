@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Hasil Bundling</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+      <div class="container">
+        <a class="navbar-brand" href="/">QUANTITAIVE ASSOCIATION RULES</a>
+        <a class="btn btn-sm btn-light" href="/">Home</a>
+      </div>
+    </nav>
+
+    <div class="container">
+      <div class="card shadow-sm p-4 mb-4">
+        <h5>Interval Discretization</h5>
+        <div class="table-responsive">
+          <table class="table table-bordered mt-3">
+            <tr class="table-dark">
+              <th>Atribut</th>
+              <th>Rendah</th>
+              <th>Sedang</th>
+              <th>Tinggi</th>
+            </tr>
+            {% for col, val in intervals.items() %}
+            <tr>
+              <td>{{ col }}</td>
+              <td>{{ val["Rendah"] }}</td>
+              <td>{{ val["Sedang"] }}</td>
+              <td>{{ val["Tinggi"] }}</td>
+            </tr>
+            {% endfor %}
+          </table>
+        </div>
+      </div>
+
+      <div class="card shadow-sm p-4">
+        <h5>Hasil Bundling</h5>
+        {% if summary and summary|length > 0 %} {% for k, rules in
+        summary.items() %}
+        <h6 class="mt-3">{{ k }}-Itemset (Top 3 Lift)</h6>
+        <ul class="list-group mb-3">
+          {% for r in rules %}
+          <li class="list-group-item">
+            {{ r["aturan"] }}
+            <span class="badge bg-dark float-end">Lift: {{ r["lift"] }}</span>
+          </li>
+          {% endfor %}
+        </ul>
+        {% endfor %} {% else %}
+        <p class="fw-bold text-danger">
+          Tidak ada aturan yang memenuhi kriteria.
+        </p>
+        {% endif %}
+      </div>
+      <a class="btn btn-dark w-100 mt-3" href="{{ url_for('hasil_terakhir') }}"
+        >← Kembali ke Hasil</a
+      >
+    </div>
+  </body>
+</html>
